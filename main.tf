@@ -11,7 +11,7 @@ locals {
 }
 
 resource "aws_s3_bucket" "weather_bucket" {
-  bucket = "weather-bucket-personal-epam"
+  bucket        = "weather-bucket-personal-epam"
   force_destroy = "true"
 }
 
@@ -61,7 +61,7 @@ resource "aws_s3_bucket_website_configuration" "weather_bucket_website_config" {
 resource "aws_ecr_repository" "python_lambda_weather" {
   name                 = "pythonweather"
   image_tag_mutability = "MUTABLE"
-  force_delete = true
+  force_delete         = true
   image_scanning_configuration {
     scan_on_push = true
   }
