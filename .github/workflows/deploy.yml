@@ -88,19 +88,19 @@ jobs:
          AWS_ACCESS_KEY_ID: ${{secrets.aws_access_key_id}}
          AWS_SECRET_ACCESS_KEY: ${{secrets.aws_secret_access_key}}
          AWS_REGION: "eu-west-1"    
-        run: AWS_SDK_LOAD_CONFIG=1 terraform init; AWS_SDK_LOAD_CONFIG=1 terraform apply -auto-approve
-     - name: Terraform Update Tfstate
-       run: |
-         git fetch --all
-         git checkout $BRANCHNAME 
-         git pull --all
-         git add .
-         CHANGES=$(git status --porcelain | wc -l)
-         if [ "$CHANGES" -gt "0" ]; then
-         git config --global user.name "Automated TFstate_Update"
-         git config --global user.email "valentin.ursu@gmail.com"
-         git remote set-url origin https://${{ github.actor }}:${{ secrets.GIT_TOKEN }}@github.com/${{ github.repository }}
-         git commit -am "Automated tfstate update"
-         git push
-         fi
+       run: AWS_SDK_LOAD_CONFIG=1 terraform init; AWS_SDK_LOAD_CONFIG=1 terraform apply -auto-approve
+    #  - name: Terraform Update Tfstate
+    #    run: |
+    #      git fetch --all
+    #      git checkout $BRANCHNAME 
+    #      git pull --all
+    #      git add .
+    #      CHANGES=$(git status --porcelain | wc -l)
+    #      if [ "$CHANGES" -gt "0" ]; then
+    #      git config --global user.name "Automated TFstate_Update"
+    #      git config --global user.email "valentin.ursu@gmail.com"
+    #      git remote set-url origin https://${{ github.actor }}:${{ secrets.GIT_TOKEN }}@github.com/${{ github.repository }}
+    #      git commit -am "Automated tfstate update"
+    #      git push
+    #      fi
  
