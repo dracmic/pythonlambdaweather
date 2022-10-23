@@ -31,7 +31,7 @@ resource "aws_iam_policy" "ecr_policy" {
           "ecr:UntagResource",
         ]
         Effect   = "Allow"
-        Resource = [ "${aws_ecr_repository.python_lambda_weather.arn}/*","${aws_ecr_repository.python_lambda_weather.arn}"]
+        Resource = ["${aws_ecr_repository.python_lambda_weather.arn}/*", "${aws_ecr_repository.python_lambda_weather.arn}"]
       },
     ]
   })
@@ -57,10 +57,10 @@ resource "aws_iam_policy" "s3_policy" {
           "s3:*",
           "s3-object-lambda:*"
         ]
-        Effect   = "Allow"
+        Effect = "Allow"
         Resource = [
-        "${aws_s3_bucket.weather_bucket.arn}/*",
-        "${aws_s3_bucket.weather_bucket.arn}"
+          "${aws_s3_bucket.weather_bucket.arn}/*",
+          "${aws_s3_bucket.weather_bucket.arn}"
         ]
       }
     ]
