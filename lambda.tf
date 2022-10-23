@@ -20,7 +20,7 @@ resource "aws_lambda_function" "main_weather" {
     }
   }
   provisioner "local-exec" {
-    command     = "aws lambda update-function-code --function-name var.lambda_function_name --image-uri ${aws_ecr_repository.python_lambda_weather.repository_url}:latest --publish"
+    command     = "aws lambda update-function-code --function-name ${var.lambda_function_name} --image-uri ${aws_ecr_repository.python_lambda_weather.repository_url}:latest --publish"
     interpreter = ["/bin/bash", "-c"]
   }
 
