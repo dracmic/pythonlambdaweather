@@ -23,14 +23,22 @@ You need to have:
 
 The terraform code was done in a non-optimized manner just for PoC and can't be improved as following: `
    
-   - separate s3 code to another file
-   - separate the lambda deployment code in another file
-   - use of variables
    - use of s3 bucket for backend 
    - use of CloudFront distribution with a domain to point to S3 bucket used for HTML file
-   - use a separate script to create and push image
 
 The code does deployment of the S3, lambda and all the dependencies.
+
+Files contents:
+
+   - `cloudwatch_event_rule.tf`: programming the Cloudwatch trigger to invoke the lambda function
+   - `ecr_repository.tf`: creation of the ECR repo used for the image which contains the python script
+   - `iam.tf`: the IAM role of the lambda with least access principle applied using policies and lambda permission for executing from Cloudwatch
+   - `lambda.tf`: deployment of lambda itself with dependencies and force update by null-resource
+   - `null_resource.tf`: creation of Docker image and push to the ECR repository
+   - `s3_bucket_site.tf`: creation of the S3 bucket with all proper rights to be public
+   - variables.tf : definition of variables with their default values
+   - terraform.tfstate the .backup are the tfstate files generated as I didn't used s3 backend
+    
 
 ## The python code from file `weathercode/weather.py`
 
