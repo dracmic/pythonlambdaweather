@@ -19,12 +19,23 @@ You need to have:
  - Before doing the commit , use terraform locally and run: `terraform fmt -write -recursive`, which will do the indentation fixes for terraform files
 
 
+## Environment variables
+
+ For the CI/CD you need to setup following environment variables as exact names:
+  
+  - `API_KEY` : which is the api key for the openweathermap, which you generated through your account and you need to wait about 10 minutes 
+    before being active
+  - `AWS_ACCESS_KEY_ID`: which is the access key id of your AWS IAM user
+  - `AWS_SECRET_ACCESS_KEY`: which the secret access key of your AWS IAM user
+  - `GIT_TOKEN` : which is your personal access token or company access token to be able to push the terraform tfstate modifications in the repo.
+  - `LOCATION` : which is the location for environment variables of the Weather Lambda example: Prague,Prague,CZ
 ## Terraform code
 
 The terraform code was done in a non-optimized manner just for PoC and can't be improved as following: `
    
    - use of s3 bucket for backend 
    - use of CloudFront distribution with a domain to point to S3 bucket used for HTML file
+   - use of IAM role to deploy with oidc
 
 The code does deployment of the S3, lambda and all the dependencies.
 
@@ -36,7 +47,7 @@ Files contents:
    - `lambda.tf`: deployment of lambda itself with dependencies and force update by null-resource
    - `null_resource.tf`: creation of Docker image and push to the ECR repository
    - `s3_bucket_site.tf`: creation of the S3 bucket with all proper rights to be public
-   - variables.tf : definition of variables with their default values
+   - variables.tf : definition of variables with their default values, which can be overwritten by adding `terraform.tfvars` in the repo and adding other values to them  
    - terraform.tfstate the .backup are the tfstate files generated as I didn't used s3 backend
     
 
@@ -44,6 +55,7 @@ Files contents:
 
 The code is a basic api interogation of openweathermap to get the specific weather data for a location.
 Things which can be improved for production ready:
+  
   - error handling
   - maybe more logging
 
